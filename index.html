@@ -67,7 +67,7 @@
     /* Profile + Terminal */
     .hero-right{position:relative;z-index:2;flex:1;display:flex;align-items:center;gap:36px;opacity:0;animation:fadeIn 1s ease 0.6s forwards;}
     .hero-profile{flex-shrink:0;}
-    .profile-frame{position:relative;width:260px;height:260px;}
+    .profile-frame{position:relative;width:340px;height:340px;}
     .profile-ring{position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(var(--cyan),var(--blue),var(--cyan));animation:rotateBorder 4s linear infinite;z-index:0;}
     .profile-ring-inner{position:absolute;inset:4px;border-radius:50%;background:var(--deep);z-index:1;}
     @keyframes rotateBorder{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
@@ -76,14 +76,15 @@
     .profile-dots{position:absolute;top:-24px;left:-24px;width:80px;height:80px;background-image:radial-gradient(circle,rgba(0,245,255,0.35) 1.5px,transparent 1.5px);background-size:14px 14px;z-index:0;}
     .profile-dots2{position:absolute;bottom:-24px;right:-24px;width:60px;height:60px;background-image:radial-gradient(circle,rgba(0,102,255,0.4) 1.5px,transparent 1.5px);background-size:12px 12px;z-index:0;}
   /* Terminal window */
-  .hero-terminal{flex:1;min-width:0;background:rgba(5,10,20,0.92);border:1px solid rgba(0,245,255,0.18);border-radius:14px;overflow:hidden;box-shadow:0 0 40px rgba(0,245,255,0.08),0 24px 60px rgba(0,0,0,0.6);}
+  .hero-terminal{flex:1;min-width:0;min-height:540px;display:flex;flex-direction:column;background:rgba(5,10,20,0.92);border:1px solid rgba(0,245,255,0.18);border-radius:14px;overflow:hidden;box-shadow:0 0 40px rgba(0,245,255,0.08),0 24px 60px rgba(0,0,0,0.6);}
   .term-bar{background:rgba(0,245,255,0.04);padding:10px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(0,245,255,0.1);}
   .term-dots{display:flex;gap:6px;}
   .td{width:11px;height:11px;border-radius:50%;display:inline-block;}
   .td1{background:#ff5f57;}.td2{background:#ffbd2e;}.td3{background:#28c840;}
   .term-title{font-size:0.58rem;color:var(--dim);letter-spacing:1px;margin-left:6px;}
-  .term-body{padding:20px;min-height:200px;font-family:var(--font-mono);}
+  .term-body{padding:20px;min-height:290px;flex:1;display:flex;flex-direction:column;font-family:var(--font-mono);}
   .term-line{margin-bottom:6px;font-size:0.7rem;}
+  #termOutput{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;}
   .term-prompt{color:var(--cyan);margin-right:8px;user-select:none;}
   .term-cmd{color:var(--text);}
   .term-cursor-blink{color:var(--cyan);animation:blink 0.8s step-end infinite;}
@@ -188,7 +189,7 @@
       .hero-cta,.hero-stats{justify-content:center;}
       .hero-right{flex-direction:column;justify-content:center;}
       .hero-terminal{display:none;}
-      .profile-frame{width:200px;height:200px;}
+      .profile-frame{width:360px;height:360px;}
       section{padding:70px 24px;}
       nav{padding:14px 20px;}
       .nav-toggle{display:inline-flex;}
@@ -546,16 +547,17 @@ initProjRow(document.getElementById('projRow'),projects);
 
 // Terminal typewriter
 const termSeqs=[
-  {cmd:'cat profile.json',lines:['  {','  <span class="to-key">"name"</span>: <span class="to-str">"RaVindu Mahiti"</span>,','  <span class="to-key">"role"</span>: <span class="to-str">"Full-Stack Dev"</span>,','  <span class="to-key">"projects"</span>: <span class="to-val">30+</span>,','  <span class="to-key">"open_to_work"</span>: <span class="to-val">true</span>','  }']},
-  {cmd:'git log --oneline -4',lines:['<span class="to-val">a1b2c3d</span> feat: ML intrusion detection','<span class="to-val">d4e5f6a</span> fix: optimize Neo4j queries','<span class="to-val">7g8h9i0</span> feat: PatientPrep mobile app','<span class="to-val">j1k2l3m</span> chore: kafka microservices']},
-  {cmd:'npm run build',lines:['<span class="to-val">✓</span> Compiling TypeScript...','<span class="to-val">✓</span> Bundling assets...','<span class="to-val">✓</span> Optimizing output...','<span class="to-str">Build complete in 1.4s 🚀</span>']},
+  {cmd:'cat profile.json',lines:['  {','  <span class="to-key">"name"</span>: <span class="to-str">"RaVindu Mahiti"</span>,','  <span class="to-key">"focus"</span>: [<span class="to-str">"distributed systems"</span>, <span class="to-str">"full-stack apps"</span>, <span class="to-str">"ML systems"</span>],','  <span class="to-key">"availability"</span>: <span class="to-str">"open to freelance"</span>,','  <span class="to-key">"mindset"</span>: <span class="to-str">"turning research into products"</span>,','  <span class="to-key">"location"</span>: <span class="to-str">"Colombo, Sri Lanka"</span>','  }']},
+  {cmd:'ls certificates --recent',lines:['<span class="to-val">✓</span> Introduction to Model Context Protocol <span class="to-key">@</span> <span class="to-str">Anthropic</span>','<span class="to-val">✓</span> Docker Training Course for the Absolute Beginner <span class="to-key">@</span> <span class="to-str">KodeKloud</span>','<span class="to-val">✓</span> Postman API Fundamentals Student Expert <span class="to-key">@</span> <span class="to-str">Postman</span>','<span class="to-val">✓</span> Accounting Principles <span class="to-key">@</span> <span class="to-str">IBMI</span>','<span class="to-val">✓</span> Oracle Java Foundations <span class="to-key">@</span> <span class="to-str">Oracle</span>']},
+  {cmd:'cat currently-learning.md',lines:['<span class="to-cmd"># Active learning</span>','- building sharper <span class="to-str">AI tools</span>','- going deeper into <span class="to-str">advanced .NET microservices</span>','- expanding <span class="to-str">Spring Boot microservices</span> patterns','- aiming for production-ready system design']},
+  {cmd:'echo $career_highlights',lines:['<span class="to-val">30+</span> projects shipped across web, mobile, ML, and backend systems','strong interest in <span class="to-str">event-driven architecture</span> and scalable APIs','comfortable moving from <span class="to-str">research</span> to <span class="to-str">working product</span>','portfolio built around practical engineering and continuous learning']},
 ];
 const tCmd=document.getElementById('termCmd'),tOut=document.getElementById('termOutput'),tCur=document.getElementById('termCursor');
 let tIdx=0;
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 async function typeStr(txt){tCmd.textContent='';for(const c of txt){tCmd.textContent+=c;await sleep(55);};}
 async function showLines(lines){tOut.innerHTML='';for(const l of lines){const d=document.createElement('div');d.className='term-out-line';d.innerHTML=l;tOut.appendChild(d);await sleep(10);d.classList.add('visible');await sleep(160);}}
-async function termLoop(){while(true){const s=termSeqs[tIdx%termSeqs.length];tIdx++;tCur.style.display='inline';await typeStr(s.cmd);tCur.style.display='none';await sleep(350);await showLines(s.lines);await sleep(2800);tCmd.textContent='';tOut.innerHTML='';await sleep(450);}}
+async function termLoop(){while(true){const s=termSeqs[tIdx%termSeqs.length];tIdx++;tCur.style.display='inline';await typeStr(s.cmd);tCur.style.display='none';await sleep(350);await showLines(s.lines);await sleep(Math.max(3600,s.lines.length*700));tCmd.textContent='';tOut.innerHTML='';await sleep(450);}}
 termLoop();
 
 // Scroll reveal
