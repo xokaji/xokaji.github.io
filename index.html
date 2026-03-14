@@ -113,24 +113,22 @@
 
     /* PROJECTS CAROUSEL */
     #projects{background:var(--deep);}
-    .carousel-wrapper{position:relative;overflow:hidden;}
-    .carousel-fade-l{position:absolute;left:0;top:0;bottom:0;width:100px;background:linear-gradient(to right,var(--deep),transparent);z-index:2;pointer-events:none;}
-    .carousel-fade-r{position:absolute;right:0;top:0;bottom:0;width:100px;background:linear-gradient(to left,var(--deep),transparent);z-index:2;pointer-events:none;}
-    .carousel-outer{overflow:hidden;}
+    .carousel-wrapper{position:relative;overflow:hidden;--project-card-w:320px;--project-card-h:360px;--project-gap:24px;}
+    .carousel-fade-l{position:absolute;left:0;top:0;bottom:0;width:24px;background:linear-gradient(to right,var(--deep),transparent);z-index:2;pointer-events:none;}
+    .carousel-fade-r{position:absolute;right:0;top:0;bottom:0;width:24px;background:linear-gradient(to left,var(--deep),transparent);z-index:2;pointer-events:none;}
+    .carousel-outer{overflow:hidden;width:100%;margin:0;}
     .carousel-row{overflow:hidden;position:relative;padding:6px 0;}
-    .carousel-track{display:flex;gap:24px;width:max-content;will-change:transform;}
+    .carousel-track{display:flex;gap:var(--project-gap);width:max-content;will-change:transform;}
     @keyframes scrollX{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-    .project-card{background:var(--surface);border:1px solid rgba(0,245,255,0.08);border-radius:14px;overflow:hidden;transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;width:285px;min-height:400px;flex-shrink:0;display:flex;flex-direction:column;user-select:none;}
+    .project-card{background:var(--surface);border:1px solid rgba(0,245,255,0.08);border-radius:14px;overflow:hidden;transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;width:var(--project-card-w);min-height:var(--project-card-h);flex-shrink:0;display:flex;flex-direction:column;user-select:none;}
     .project-card:hover{transform:translateY(-6px);border-color:rgba(0,245,255,0.3);box-shadow:var(--glow-blue);}
     .project-banner{height:5px;}
-    .project-thumb{height:150px;border-bottom:1px solid rgba(0,245,255,0.12);background:#0b1329;}
-    .project-thumb img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none;pointer-events:none;}
     .b1{background:linear-gradient(90deg,#00f5ff,#0066ff);}
     .b2{background:linear-gradient(90deg,#0066ff,#7c3aed);}
     .b3{background:linear-gradient(90deg,#06b6d4,#10b981);}
     .project-body{padding:20px;display:flex;flex-direction:column;flex:1;}
-    .project-type{font-size:0.58rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;}
-    .project-name{font-family:var(--font-display);font-weight:700;font-size:0.92rem;margin-bottom:10px;color:var(--text);line-height:1.35;}
+    .project-type{font-size:0.58rem;letter-spacing:1.4px;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;line-height:1.5;min-height:2.2em;overflow-wrap:anywhere;word-break:break-word;}
+    .project-name{font-family:var(--font-display);font-weight:700;font-size:1.3rem;margin-bottom:10px;color:var(--text);line-height:1.45;min-height:3.2em;overflow-wrap:anywhere;word-break:break-word;hyphens:auto;}
     .project-desc{font-size:0.67rem;color:var(--dim);line-height:1.8;margin-bottom:16px;flex:1;}
     .project-stack{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px;}
     .stack-tag{font-size:0.58rem;padding:3px 9px;background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.15);border-radius:4px;color:var(--cyan);}
@@ -200,7 +198,10 @@
       nav.menu-open .nav-links{transform:translateY(0);opacity:1;pointer-events:auto;}
       footer{flex-direction:column;gap:8px;text-align:center;padding:20px;}
       .honors-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
-      .project-card{width:260px;min-height:390px;}
+      .carousel-wrapper{--project-card-w:270px;--project-card-h:340px;--project-gap:20px;}
+      .carousel-outer{width:100%;margin:0;}
+      .carousel-fade-l,.carousel-fade-r{width:34px;}
+      .project-card{min-height:var(--project-card-h);}
     }
     @media(max-width:600px){
       body{cursor:auto;}
@@ -426,6 +427,7 @@ honorsGridEl.innerHTML=honorHtml;
 // Projects
 const ghSvg=`<svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>`;
 const projects=[
+  {b:'b2',type:'ML · Network Analytics',name:'Forecasting-Peak-Hour-Bandwidth-Demand-in-a-University-Network',desc:'Binary classification ML project to predict whether a network flow occurs during peak or non-peak hours in a university network, with a FastAPI-powered interactive dashboard.',stack:['Python','FastAPI','XGBoost'],url:'https://github.com/xokaji/Forecasting-Peak-Hour-Bandwidth-Demand-in-a-University-Network'},
   {b:'b1',type:'ML · Cybersecurity',name:'Network-Intrusion-Detection-System-using-Machine-Learning',desc:'A Machine Learning powered cybersecurity system that detects malicious network traffic using CIC-IDS2017 dataset.',stack:['Jupyter Notebook','Python','Scikit-learn'],url:'https://github.com/xokaji/Network-Intrusion-Detection-System-using-Machine-Learning'},
   {b:'b2',type:'Backend · Event-Driven',name:'Microservices-Kafka-Demo-using-Java-Springboot',desc:'A Spring Boot microservices project demonstrating event-driven architecture using Apache Kafka.',stack:['Java','Spring Boot','Kafka'],url:'https://github.com/xokaji/Microservices-Kafka-Demo-using-Java-Springboot'},
   {b:'b3',type:'AI Tool · Developer',name:'AI-Code-Analyzer-using-MCP',desc:'An AI-powered tool that lets you point at any local codebase (or clone a GitHub repo) and ask plain-English questions about it.',stack:['Python','MCP','AI'],url:'https://github.com/xokaji/AI-Code-Analyzer-using-MCP'},
@@ -449,7 +451,12 @@ function escXml(v){return v.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/
 function makeProjectThumb(p){
   const palette={b1:['#00f5ff','#0066ff'],b2:['#0066ff','#7c3aed'],b3:['#06b6d4','#10b981']};
   const cols=palette[p.b]||palette.b1;
-  const title=escXml(p.name.length>34?p.name.slice(0,34)+'...':p.name);
+  const rawTitle=(p.name||'').trim();
+  const titleFirst=rawTitle.slice(0,33);
+  const titleSecondRaw=rawTitle.length>33?rawTitle.slice(33):'';
+  const titleSecond=titleSecondRaw.length>33?titleSecondRaw.slice(0,33)+'...':titleSecondRaw;
+  const title1=escXml(titleFirst);
+  const title2=escXml(titleSecond);
   const type=escXml(p.type);
   const stack=escXml(p.stack.slice(0,3).join(' • '));
   const descClean=(p.desc||'').replace(/\s+/g,' ').trim();
@@ -459,28 +466,49 @@ function makeProjectThumb(p){
     +'<rect width="700" height="400" fill="#0a1126"/>'
     +'<rect width="700" height="400" fill="url(#g)" opacity="0.14"/>'
     +'<g opacity="0.18"><circle cx="610" cy="70" r="120" fill="'+cols[0]+'"/><circle cx="130" cy="350" r="160" fill="'+cols[1]+'"/></g>'
-    +'<rect x="34" y="34" width="632" height="332" rx="18" fill="none" stroke="'+cols[0]+'" opacity="0.45"/>'
-    +'<text x="54" y="94" fill="'+cols[0]+'" font-family="JetBrains Mono, monospace" font-size="20" letter-spacing="1.3">PROJECT SHOWCASE</text>'
-    +'<text x="54" y="150" fill="#e0eaff" font-family="Sora, sans-serif" font-size="35" font-weight="700">'+title+'</text>'
-    +'<text x="54" y="196" fill="#7aa3ff" font-family="JetBrains Mono, monospace" font-size="18">'+type+'</text>'
-    +'<text x="54" y="236" fill="#6b82b0" font-family="JetBrains Mono, monospace" font-size="16">'+stack+'</text>'
-    +'<text x="54" y="270" fill="#91a7d5" font-family="JetBrains Mono, monospace" font-size="14">'+summary+'</text>'
+    +'<rect x="22" y="34" width="656" height="332" rx="18" fill="none" stroke="'+cols[0]+'" opacity="0.45"/>'
+    +'<text x="38" y="94" fill="'+cols[0]+'" font-family="JetBrains Mono, monospace" font-size="20" letter-spacing="1.3">PROJECT SHOWCASE</text>'
+    +'<text x="38" y="146" fill="#e0eaff" font-family="Sora, sans-serif" font-size="28" font-weight="700">'+title1+'</text>'
+    +(title2?'<text x="38" y="178" fill="#e0eaff" font-family="Sora, sans-serif" font-size="28" font-weight="700">'+title2+'</text>':'')
+    +'<text x="38" y="214" fill="#7aa3ff" font-family="JetBrains Mono, monospace" font-size="18">'+type+'</text>'
+    +'<text x="38" y="250" fill="#6b82b0" font-family="JetBrains Mono, monospace" font-size="16">'+stack+'</text>'
+    +'<text x="38" y="282" fill="#91a7d5" font-family="JetBrains Mono, monospace" font-size="14">'+summary+'</text>'
     +'</svg>';
   return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
 }
 function renderProjCard(p){
-  return '<div class="project-card"><div class="project-banner '+p.b+'"></div><div class="project-thumb"><img src="'+makeProjectThumb(p)+'" alt="'+p.name+' preview" draggable="false"/></div><div class="project-body"><div class="project-type">'+p.type+'</div><div class="project-name">'+p.name+'</div><div class="project-desc">'+p.desc+'</div><div class="project-stack">'+p.stack.map(s=>'<span class="stack-tag">'+s+'</span>').join('')+'</div><div class="project-links"><a href="'+p.url+'" target="_blank" class="project-link">'+ghSvg+' GitHub</a></div></div></div>';
+  return '<div class="project-card"><div class="project-banner '+p.b+'"></div><div class="project-body"><div class="project-type">'+p.type+'</div><div class="project-name">'+p.name+'</div><div class="project-desc">'+p.desc+'</div><div class="project-stack">'+p.stack.map(s=>'<span class="stack-tag">'+s+'</span>').join('')+'</div><div class="project-links"><a href="'+p.url+'" target="_blank" class="project-link">'+ghSvg+' GitHub</a></div></div></div>';
 }
 function initProjRow(rowEl,arr){
   const trk=rowEl.querySelector('.carousel-track');
   trk.innerHTML=[...arr,...arr].map(renderProjCard).join('');
   let pos=0,halfW=0,paused=false,dragging=false,dragX=0,startPos=0;
+  function recalcProjectLayout(){
+    const isDesktop=window.innerWidth>900;
+    if(isDesktop){
+      const gapVal=getComputedStyle(trk).columnGap||getComputedStyle(trk).gap||'24px';
+      const gapPx=parseFloat(gapVal)||24;
+      const rowW=rowEl.clientWidth;
+      const cardW=(rowW-(gapPx*2))/3;
+      rowEl.style.setProperty('--project-card-w',cardW+'px');
+      rowEl.style.setProperty('--project-card-h','360px');
+    }else{
+      rowEl.style.removeProperty('--project-card-w');
+      rowEl.style.removeProperty('--project-card-h');
+    }
+    halfW=trk.scrollWidth/2;
+    if(halfW>0){
+      while(pos<0){pos+=halfW;}
+      while(pos>=halfW){pos-=halfW;}
+    }
+  }
   function tick(){
     if(!paused&&!dragging&&halfW>0){pos+=0.55;if(pos>=halfW)pos-=halfW;}
     trk.style.transform='translateX('+(-pos)+'px)';
     requestAnimationFrame(tick);
   }
-  requestAnimationFrame(()=>{halfW=trk.scrollWidth/2;requestAnimationFrame(tick);});
+  requestAnimationFrame(()=>{recalcProjectLayout();requestAnimationFrame(tick);});
+  window.addEventListener('resize',recalcProjectLayout);
   rowEl.addEventListener('mouseenter',()=>paused=true);
   rowEl.addEventListener('mouseleave',()=>{paused=false;dragging=false;});
   rowEl.addEventListener('mousedown',e=>{dragging=true;dragX=e.clientX;startPos=pos;e.preventDefault();});
